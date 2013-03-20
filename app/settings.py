@@ -2,15 +2,23 @@
 
 CONFIG = __import__('app.config').config
 
+# Debug settings
 TEMPLATE_DEBUG = DEBUG = False
 
+# Project's title which will be shown in admin interface
 GRAPPELLI_ADMIN_TITLE = 'Project Name'
+
+# Default project dashboard, you probably won't need to change it
 GRAPPELLI_INDEX_DASHBOARD = 'app.dashboard.CustomIndexDashboard'
+
+# Don't change this for filebrowser to work properly
 FILEBROWSER_DIRECTORY = ''
+
+# Default filebrowser admin thumbnail size
 FILEBROWSER_ADMIN_THUMBNAIL = 'medium'
 
 # Default email address to use for various automated correspondence from the site manager(s).
-DEFAULT_FROM_EMAIL = 'info@ailove.ru'
+DEFAULT_FROM_EMAIL = 'info@projectname.ru'
 
 # The email address that error messages come from, such as those sent to ADMINS and MANAGERS.
 SERVER_EMAIL = 'projectname.ru <error@ailove.ru>'
@@ -20,7 +28,7 @@ SERVER_EMAIL = 'projectname.ru <error@ailove.ru>'
 # of the tuple should be a tuple of (Full name, email address).
 MANAGERS = ADMINS = (('error', 'error@ailove.ru'),)
 
-#Subject-line prefix for email messages
+# Subject-line prefix for email messages
 EMAIL_SUBJECT_PREFIX = ''
 
 DATABASES = {
