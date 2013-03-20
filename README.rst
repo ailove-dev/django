@@ -82,7 +82,7 @@ Also I will show you the example virtual host configuration::
 
         Alias /data /repositories/projectname/data
 
-        <Directory /Users/STORM/Repositories/DaSreda2/data>
+        <Directory /repositories/projectname/data>
             Options Includes FollowSymLinks MultiViews
             AllowOverride All
             Order allow,deny
