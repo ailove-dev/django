@@ -1,0 +1,8 @@
+Django
+South
+distribute
+PIL
+django-filebrowser
+django-grappelli
+psycopg2
+wsgiref
