@@ -50,7 +50,50 @@ Then add the following line to your httpd.conf and restart your apache::
 
     LoadModule wsgi_module libexec/apache2/mod_wsgi.so
 
-Of course you may have different paths than me, so go figure out your paths yourself.
+Also I will show you the example virtual host configuration::
+
+    <VirtualHost *:80>
+
+        ServerName projectname.lo
+        DocumentRoot /repositories/projectname/repo/dev/htdocs
+        CustomLog /repositories/projectname/logs/projectname.lo-acc combined
+        ErrorLog /repositories/projectname/logs/projectname.lo-err
+
+        WSGIDaemonProcess projectname python-path=/repositories/projectname/python/lib/python2.7/site-packages
+        WSGIProcessGroup projectname
+
+        WSGIScriptAlias / /repositories/projectname/repo/dev/wsgi/django.wsgi
+
+        <Directory /repositories/projectname/repo/dev/wsgi>
+            Options Includes FollowSymLinks MultiViews
+            AllowOverride All
+            Order allow,deny
+            Allow from all
+        </Directory>
+
+        Alias /static /repositories/projectname/repo/dev/htdocs
+
+        <Directory /repositories/projectname/repo/dev/htdocs>
+            Options Includes FollowSymLinks MultiViews
+            AllowOverride All
+            Order allow,deny
+            Allow from all
+        </Directory>
+
+        Alias /data /repositories/projectname/data
+
+        <Directory /Users/STORM/Repositories/DaSreda2/data>
+            Options Includes FollowSymLinks MultiViews
+            AllowOverride All
+            Order allow,deny
+            Allow from all
+        </Directory>
+
+    </VirtualHost>
+
+Of course you may have different paths than me, so go figure out your paths yourself. Also if you will use this example
+configuration you have to restart apache AFTER you complete all next steps, otherwise apache will complain that you don't
+have everything listed in this config file.
 
 Installation
 ------------
