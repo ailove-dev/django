@@ -1,7 +1,7 @@
-ALLOWED_HOSTS.extend(['test.projectname.dev.ailove.ru'])
+from settings import *
 
-DATABASES = {
-    'default': {
-        'HOST': 'db.test.ailove.ru'
-    }
-}
+MANAGERS = ADMINS = ()
+
+ALLOWED_HOSTS.extend(['projectname.test.ailove.ru'])
+
+DATABASES['default']['HOST'] = 'db.test.ailove.ru'
