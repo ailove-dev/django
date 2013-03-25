@@ -101,6 +101,11 @@ STATICFILES_FINDERS = (
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
+# A tuple of directories where Django looks for translation files
+LOCALE_PATHS = (
+    CONFIG.PATHS['APP_DIR'] + 'app/locale/',
+)
+
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'put_your_key_here'
 

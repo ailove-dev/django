@@ -1,0 +1,7 @@
+#: templates/admin/base_site.html:4
+msgid "Django site admin"
+msgstr "Панель администрирования"
+
+#: templates/admin/base_site.html:7
+msgid "Django administration"
+msgstr "Администрирование"
