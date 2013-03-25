@@ -1,3 +1,19 @@
+#: templates/grappelli/dashboard/modules/recent_actions.html:15
+msgid "Record Added"
+msgstr "added"
+
+#: templates/grappelli/dashboard/modules/recent_actions.html:15
+msgid "Record Edited"
+msgstr "edited"
+
+#: templates/grappelli/dashboard/modules/recent_actions.html:15
+msgid "Record Deleted"
+msgstr "deleted"
+
+#: templates/grappelli/dashboard/modules/recent_actions.html:12
+msgid "Goto Object"
+msgstr "Proceed"
+
 #: templates/admin/base_site.html:4
 msgid "Django site admin"
 msgstr "Administration panel"
