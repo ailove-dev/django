@@ -110,7 +110,6 @@ following commands::
     cd repo/dev
     rm -rf .git
     git init
-    git add .gitignore *
     git commit -m "Initial commit"
 
 About directories structure
