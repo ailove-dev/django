@@ -69,6 +69,12 @@ USE_L10N = True
 # If you set this to False, Django will not use timezone-aware datetimes.
 USE_TZ = True
 
+# The directory where uploaded files larger than FILE_UPLOAD_MAX_MEMORY_SIZE will be stored
+FILE_UPLOAD_TEMP_DIR = CONFIG.PATHS['TMP_DIR']
+
+# Set this to control where Django stores session files in case if file-based session storage is used
+SESSION_FILE_PATH = CONFIG.PATHS['TMP_DIR']
+
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
 MEDIA_ROOT = CONFIG.PATHS['DATA_DIR']
@@ -129,8 +135,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 MIDDLEWARE_CLASSES = (
-    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -191,7 +197,7 @@ LOGGING = {
     }
 }
 
-if(CONFIG.SETTINGS['ENV'] == 'test'):
+if CONFIG.SETTINGS['ENV'] == 'test':
     from settings_test import *
-if(CONFIG.SETTINGS['ENV'] == 'dev'):
+if CONFIG.SETTINGS['ENV'] == 'dev':
     from settings_dev import *
