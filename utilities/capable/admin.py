@@ -1,12 +1,18 @@
 from django.contrib import admin
 from django.conf import settings
 
-def imageable_field(object):
-    path = object.attachment.folder
-    file = object.attachment.version_name(settings.FILEBROWSER_ADMIN_THUMBNAIL)
-    return '<img src="' + settings.MEDIA_URL + path + '/' + file + '" />'
+def imageable_field(image, short_description='Image', size=settings.FILEBROWSER_ADMIN_THUMBNAIL):
+    def image_thumbnail(self, object):
+        image = eval(image_thumbnail.image)
 
-imageable_field.allow_tags = True
+        if image:
+            return '<img src="' + image.version_generate(size).url + '" />'
+        else:
+            return 'No Image'
+
+    image_thumbnail.__dict__.update({'short_description': short_description, 'allow_tags': True, 'image': image})
+
+    return image_thumbnail
 
 class OrderableAdmin(admin.ModelAdmin):
     list_display = list_editable = exclude = ('position',)
