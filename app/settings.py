@@ -115,6 +115,34 @@ LOCALE_PATHS = (
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'put_your_key_here'
 
+# CKEditor directory for uploaded files
+CKEDITOR_UPLOAD_PATH = MEDIA_ROOT + 'ckeditor/admin'
+
+# CKEditor main config
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar':
+        [
+            { 'name': 'document',    'items' : [ 'Source' ] },
+            { 'name': 'clipboard',   'items' : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] },
+            { 'name': 'editing',     'items' : [ 'Find','Replace','-','SelectAll','-','SpellChecker', 'Scayt' ] },
+            { 'name': 'basicstyles', 'items' : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
+            '/',
+            { 'name': 'paragraph',   'items' : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote','CreateDiv','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','BidiLtr','BidiRtl' ] },
+            { 'name': 'links',       'items' : [ 'Link','Unlink','Anchor' ] },
+            { 'name': 'insert',      'items' : [ 'Image','Flash','Table','HorizontalRule','Smiley','SpecialChar' ] },
+            '/',
+            { 'name': 'styles',      'items' : [ 'Styles','Format','Font','FontSize' ] },
+            { 'name': 'colors',      'items' : [ 'TextColor','BGColor' ] },
+            { 'name': 'tools',       'items' : [ 'Maximize', 'ShowBlocks' ] }
+        ],
+        'filebrowserImageBrowseUrl': '/admin/filebrowser/browse?pop=3',
+        'removeDialogTabs': 'link:upload;image:Upload;flash:Upload',
+        'height': 300,
+        'width': 755,
+    },
+}
+
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
@@ -154,6 +182,7 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
+    'ckeditor',
     'south',
     'utilities.capable',
     'utilities.templatetags.common',
@@ -199,5 +228,5 @@ LOGGING = {
 
 if CONFIG.SETTINGS['ENV'] == 'test':
     from settings_test import *
-if CONFIG.SETTINGS['ENV'] == 'dev':
+if CONFIG.SETTINGS['ENV'] == 'dev' or CONFIG.SETTINGS['ENV'] == 'local':
     from settings_dev import *

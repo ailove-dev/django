@@ -1,5 +1,5 @@
 Django Ailove Edition
-=======================
+=====================
 
 What's inside?
 --------------
@@ -18,7 +18,7 @@ Preparations
 You need to make some preparations for your django project to work properly
 
 Python
-~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~
 
 At first you need to install Python. Every Python version installs itself with a MAJOR version number, for example
 /usr/local/lib/python2.6 or /usr/local/lib/python2.7 etc, so if you want to make your python version PRIMARY on
@@ -31,7 +31,7 @@ python version from 2.x branch, extract it somewhere, cd into dir and run the fo
     sudo make install
 
 mod_wsgi
-~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~
 
 Now you need to install mod_wsgi for apache web server. If you don't use apache you have a lot of other options, but we use
 mod_wsgi and we are happy with it, so if you use another web server you are on your own.
@@ -71,9 +71,9 @@ Also I will show you the example virtual host configuration::
             Allow from all
         </Directory>
 
-        Alias /static /repositories/projectname/repo/dev/htdocs
+        Alias /static /repositories/projectname/data/static/dev
 
-        <Directory /repositories/projectname/repo/dev/htdocs>
+        <Directory /repositories/projectname/data/static/dev>
             Options Includes FollowSymLinks MultiViews
             AllowOverride All
             Order allow,deny
@@ -113,7 +113,7 @@ following commands::
     git commit -m "Initial commit"
 
 About directories structure
-~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * cache - for framework cache
 * conf - host independed configuration INI files parsed by app/config.py file
@@ -123,7 +123,7 @@ About directories structure
 * logs - store the logs here
 
 Virtualenv
-~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~
 
 Now you need to install virtualenv. This is a tool to create isolated python environments and it's really very useful.
 Download last version of virtualenv, extract it somewhere, cd into dir and run the following command::
@@ -133,7 +133,7 @@ Download last version of virtualenv, extract it somewhere, cd into dir and run t
 Great, you have just installed your global virtualenv. Now you have to make an isolated environment for you project::
 
     cd into_project_dir
-    /usr/local/bin/virtualenv --no-site-packages --distribute python
+    /usr/local/bin/virtualenv python
 
 Now you have a directory called python in your project's dir. To activate your project's isolated environment run::
 
@@ -156,7 +156,7 @@ To deactivate your isolated environment run::
     deactivate
 
 Project Initialization
-~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
 
 Now you have to run some commands to initialize your project. You have to activate your project's isolated environment
 like I explained in previous step for this commands to work properly, I will remind you how to do it::
@@ -183,7 +183,7 @@ If for some reason you didn't create admin superuser in previous step you can do
     python repo/dev/manage.py createsuperuser
 
 Cleaning
-~~~~~~~~~~~~~~
+~~~~~~~~
 
 Don't forget to deactivate your isolated environment when your are done::
 

@@ -1,7 +1,8 @@
 Django
 South
-distribute
 PIL
+Pillow
+django-ckeditor
 django-filebrowser
 django-grappelli
 psycopg2

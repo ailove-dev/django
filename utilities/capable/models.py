@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Orderable(models.Model):
     position = models.PositiveIntegerField()
 

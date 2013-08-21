@@ -2,6 +2,7 @@ import os
 from django.contrib import admin
 from django.conf import settings
 
+
 def imageable_field(image, short_description='Image', size=settings.FILEBROWSER_ADMIN_THUMBNAIL):
     def image_thumbnail(self, object):
         image = eval(image_thumbnail.image)
