@@ -16,7 +16,7 @@ PATHS['CONFIG_DIR'] = path.realpath(path.join(PATHS['APP_DIR'], '../../conf')) +
 PATHS['TMP_DIR'] = path.realpath(path.join(PATHS['APP_DIR'], '../../tmp')) + '/'
 PATHS['CACHE_DIR'] = path.realpath(path.join(PATHS['APP_DIR'], '../../cache')) + '/'
 
-match = re.match(r'/srv/www/[a-zA-Z0-9_\-]+/repo/(?P<branch>\w+)/', PATHS['APP_DIR'])
+match = re.match(r'/srv/www/[a-zA-Z0-9_\-]+/repo/(?P<branch>[\w\-]+)/', PATHS['APP_DIR'])
 
 if match is not None:
     SETTINGS['BRANCH'] = match.group('branch')
