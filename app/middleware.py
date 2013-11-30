@@ -2,20 +2,20 @@
 
 from django import http
 
-
 try:
     from django.conf import settings
     XHR_SHARING_ALLOWED_ORIGINS = settings.XHR_SHARING_ALLOWED_ORIGINS
     XHR_SHARING_ALLOWED_HEADERS = settings.XHR_SHARING_ALLOWED_HEADERS
     XHR_SHARING_ALLOWED_METHODS = settings.XHR_SHARING_ALLOWED_METHODS
-except:
+except AttributeError:
     XHR_SHARING_ALLOWED_ORIGINS = '*'
     XHR_SHARING_ALLOWED_HEADERS = ['X-Requested-With', 'X-File-Name', 'Content-Type']
-    XHR_SHARING_ALLOWED_METHODS = ['POST','GET','OPTIONS', 'PUT', 'DELETE']
+    XHR_SHARING_ALLOWED_METHODS = ['POST', 'GET', 'OPTIONS', 'PUT', 'DELETE']
 
 
 class XhrSharing(object):
-    def process_request(self, request):
+    @staticmethod
+    def process_request(request):
         if 'HTTP_ACCESS_CONTROL_REQUEST_METHOD' in request.META:
             response = http.HttpResponse()
             response['Access-Control-Allow-Origin'] = XHR_SHARING_ALLOWED_ORIGINS
@@ -26,7 +26,8 @@ class XhrSharing(object):
 
         return None
 
-    def process_response(self, request, response):
+    @staticmethod
+    def process_response(request, response):
         if response.has_header('Access-Control-Allow-Origin'):
             return response
 

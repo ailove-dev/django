@@ -1,7 +1,8 @@
 configs = ('database', 'memcache', 'social', 'revision')
 local_ips = ('192.168.', '127.0.0.1')
 
-import socket, re
+import re
+import socket
 from os import path
 from cStringIO import StringIO
 from ConfigParser import SafeConfigParser
@@ -26,10 +27,10 @@ else:
 PATHS['STATIC_DIR'] = path.realpath(path.join(PATHS['DATA_DIR'], 'static', SETTINGS['BRANCH'])) + '/'
 
 for config in configs:
-    file = path.join(PATHS['CONFIG_DIR'], config)
+    filepath = path.join(PATHS['CONFIG_DIR'], config)
 
-    if path.exists(file):
-        parser.readfp(StringIO('[config]\n' + open(file, 'r').read()))
+    if path.exists(filepath):
+        parser.readfp(StringIO('[config]\n' + open(filepath, 'r').read()))
 
         for item in parser.items('config'):
             SETTINGS[item[0].upper()] = item[1]

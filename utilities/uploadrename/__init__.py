@@ -1,4 +1,5 @@
-import os, uuid
+import os
+import uuid
 from filebrowser import settings, signals
 
 

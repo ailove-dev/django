@@ -1,6 +1,5 @@
 Django
 South
-PIL
 Pillow
 django-ckeditor
 django-filebrowser

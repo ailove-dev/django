@@ -4,13 +4,14 @@ from django.http import QueryDict
 
 register = template.Library()
 
+
 @register.filter
-def number_format(number, args = ''):
+def number_format(number, args=''):
     qd = QueryDict(args)
 
-    decimals = int(qd['decimals']) if qd.has_key('decimals') else 0
-    dec_point = str(qd['dec_point']) if qd.has_key('dec_point') else '.'
-    thousands_sep = str(['thousands_sep']) if qd.has_key('thousands_sep') else ' '
+    decimals = int(qd['decimals']) if 'decimals' in qd else 0
+    dec_point = str(qd['dec_point']) if 'dec_point' in qd else '.'
+    thousands_sep = str(['thousands_sep']) if 'thousands_sep' in qd else ' '
 
     try:
         number = round(float(number), decimals)
@@ -38,12 +39,13 @@ def number_format(number, args = ''):
     else:
         return '%s%s' % (neg and '-' or '', thousands_sep.join(parts))
 
+
 @register.filter
 def replace(value, args):
     qd = QueryDict(args)
     value = unicode(value)
 
-    if qd.has_key('from') and qd.has_key('to'):
+    if 'from' in qd and 'to' in qd:
         return value.replace(qd['from'], qd['to'])
     else:
         return value

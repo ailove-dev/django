@@ -5,6 +5,7 @@ What's inside?
 --------------
 
 * Django
+* CKEditor
 * South Migrations
 * Grappelli Filebrowser
 * Grappelli Admin Interface
@@ -185,7 +186,7 @@ If for some reason you didn't create admin superuser in previous step you can do
 Cleaning
 ~~~~~~~~
 
-Don't forget to deactivate your isolated environment when your are done::
+Don't forget to deactivate your isolated environment when you are done::
 
     deactivate
 

@@ -16,6 +16,7 @@ def imageable_field(image, short_description='Image', size=settings.FILEBROWSER_
 
     return image_thumbnail
 
+
 class OrderableAdmin(admin.ModelAdmin):
     list_display = list_editable = exclude = ('position',)
 

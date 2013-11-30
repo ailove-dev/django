@@ -33,12 +33,12 @@ EMAIL_SUBJECT_PREFIX = ''
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': CONFIG.SETTINGS['DB_NAME'],                 # Or path to database file if using sqlite3.
-        'USER': CONFIG.SETTINGS['DB_USER'],                 # Not used with sqlite3.
-        'PASSWORD': CONFIG.SETTINGS['DB_PASSWORD'],         # Not used with sqlite3.
-        'HOST': CONFIG.SETTINGS['DB_HOST'],                 # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                                         # Set to empty string for default. Not used with sqlite3.
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'
+        'NAME': CONFIG.SETTINGS['DB_NAME'],                  # Or path to database file if using sqlite3
+        'USER': CONFIG.SETTINGS['DB_USER'],                  # Not used with sqlite3
+        'PASSWORD': CONFIG.SETTINGS['DB_PASSWORD'],          # Not used with sqlite3
+        'HOST': CONFIG.SETTINGS['DB_HOST'],                  # Set to empty string for localhost. Not used with sqlite3
+        'PORT': '',                                          # Set to empty string for default. Not used with sqlite3
     }
 }
 
@@ -104,7 +104,7 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # A tuple of directories where Django looks for translation files
@@ -123,18 +123,18 @@ CKEDITOR_CONFIGS = {
     'default': {
         'toolbar':
         [
-            { 'name': 'document',    'items' : [ 'Source' ] },
-            { 'name': 'clipboard',   'items' : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] },
-            { 'name': 'editing',     'items' : [ 'Find','Replace','-','SelectAll','-','SpellChecker', 'Scayt' ] },
-            { 'name': 'basicstyles', 'items' : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
+            {'name': 'document',    'items': ['Source']},
+            {'name': 'clipboard',   'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
+            {'name': 'editing',     'items': ['Find', 'Replace', '-', 'SelectAll', '-', 'SpellChecker', 'Scayt']},
+            {'name': 'basicstyles', 'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
             '/',
-            { 'name': 'paragraph',   'items' : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote','CreateDiv','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','BidiLtr','BidiRtl' ] },
-            { 'name': 'links',       'items' : [ 'Link','Unlink','Anchor' ] },
-            { 'name': 'insert',      'items' : [ 'Image','Flash','Table','HorizontalRule','Smiley','SpecialChar' ] },
+            {'name': 'paragraph',   'items': ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl']},
+            {'name': 'links',       'items': ['Link', 'Unlink', 'Anchor']},
+            {'name': 'insert',      'items': ['Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar']},
             '/',
-            { 'name': 'styles',      'items' : [ 'Styles','Format','Font','FontSize' ] },
-            { 'name': 'colors',      'items' : [ 'TextColor','BGColor' ] },
-            { 'name': 'tools',       'items' : [ 'Maximize', 'ShowBlocks' ] }
+            {'name': 'styles',      'items': ['Styles', 'Format', 'Font', 'FontSize']},
+            {'name': 'colors',      'items': ['TextColor', 'BGColor']},
+            {'name': 'tools',       'items': ['Maximize', 'ShowBlocks']}
         ],
         'filebrowserImageBrowseUrl': '/admin/filebrowser/browse?pop=3',
         'removeDialogTabs': 'link:upload;image:Upload;flash:Upload',
@@ -147,7 +147,7 @@ CKEDITOR_CONFIGS = {
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
+    #'django.template.loaders.eggs.Loader',
 )
 
 # Template context processors
@@ -168,8 +168,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    # Uncomment the next line for simple clickjacking protection:
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #Uncomment the next line for simple clickjacking protection:
+    #'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
 ROOT_URLCONF = 'app.urls'
