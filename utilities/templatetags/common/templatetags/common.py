@@ -31,9 +31,9 @@ def number_format(number, args=''):
 
     if decimals:
         return '%s%s%s%s' % (
-            neg and '-' or '', 
+            neg and '-' or '',
             thousands_sep.join(parts),
-            dec_point, 
+            dec_point,
             fractional.ljust(decimals, '0')[:decimals]
         )
     else:
