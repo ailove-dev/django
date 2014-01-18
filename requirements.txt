@@ -1,7 +1,7 @@
 Django
 South
 Pillow
-django-ckeditor
+django-ckeditor-updated
 django-filebrowser
 django-grappelli
 psycopg2
