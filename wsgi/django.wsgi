@@ -10,5 +10,8 @@ from django.conf import settings
 application = django.core.handlers.wsgi.WSGIHandler()
 
 if settings.CONFIG.SETTINGS['ENV'] == 'local':
-    import app.monitor
-    app.monitor.start(interval=1.0)
+    try:
+        import uwsgi
+    except ImportError:
+        import app.monitor
+        app.monitor.start(interval=1.0)
