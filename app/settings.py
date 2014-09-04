@@ -183,7 +183,6 @@ TEMPLATE_DIRS = (
 
 INSTALLED_APPS = (
     'ckeditor',
-    'south',
     'utilities.capable',
     'utilities.templatetags.common',
     'grappelli.dashboard',
@@ -225,6 +224,8 @@ LOGGING = {
         },
     }
 }
+
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 if CONFIG.SETTINGS['ENV'] == 'test':
     from settings_test import *
