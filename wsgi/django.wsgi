@@ -2,12 +2,12 @@ import os
 import sys
 
 sys.path.append(os.path.realpath(os.path.join(os.path.dirname(__file__), '../')))
-os.environ['DJANGO_SETTINGS_MODULE'] = 'app.settings'
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'app.settings')
 
-import django.core.handlers.wsgi
+from django.core.wsgi import get_wsgi_application
+application = get_wsgi_application()
+
 from django.conf import settings
-
-application = django.core.handlers.wsgi.WSGIHandler()
 
 if settings.CONFIG.SETTINGS['ENV'] == 'local':
     try:
