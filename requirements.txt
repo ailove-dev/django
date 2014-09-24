@@ -1,6 +1,6 @@
 Django
 Pillow
-django-ckeditor-updated
+django-ckeditor
 django-filebrowser
 django-grappelli
 psycopg2
