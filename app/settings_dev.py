@@ -2,4 +2,4 @@ from settings import *
 
 DEBUG = True
 
-MIDDLEWARE_CLASSES += ('app.middleware.XhrSharing',)
+MIDDLEWARE_CLASSES += ('app.middleware.XhrSharingMiddleware',)

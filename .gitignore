@@ -1,0 +1,68 @@
+#########
+# General
+#########
+# Logs
+logs
+*.log
+.DS_Store
+._*
+.Trashes
+
+
+##########
+# Frontend
+##########
+pids
+*.pid
+*.seed
+
+pkg
+node_modules
+lib-cov
+coverage
+build/Release
+
+.grunt
+.lock-wscript
+.sass-cache
+.coveralls.yml
+Gemfile.lock
+
+#########
+# Backend
+#########
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+python/
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+target/
+*.egg-info/
+.installed.cfg
+*.egg
+*.manifest
+*.spec
+
+# Pip
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Test
+htmlcov/
+.tox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
