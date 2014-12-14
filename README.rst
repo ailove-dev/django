@@ -6,12 +6,8 @@ What's inside?
 
 * Django
 * CKEditor
-* South Migrations
 * Grappelli Filebrowser
 * Grappelli Admin Interface
-* Custom Template Tags (utilities.templatetags)
-* Advanced Model Capabilities (utilities.capable)
-* Unique Names for Uploaded Files (utilities.uploadrename)
 
 Preparations
 ------------

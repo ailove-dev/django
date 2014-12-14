@@ -1,15 +1,18 @@
-configs = ('database', 'memcache', 'social', 'revision')
-local_ips = ('192.168.', '127.0.0.1')
+# -*- coding: utf-8 -*-
 
+import sys
 import re
 import socket
 from os import path
 from cStringIO import StringIO
 from ConfigParser import SafeConfigParser
 
-
+CONFIG_NAMES = ('database', 'memcache', 'social', 'revision')
+LOCAL_IPS = ('192.168.', '127.0.0.1')
 PATHS = SETTINGS = {}
+
 parser = SafeConfigParser()
+
 
 PATHS['APP_DIR'] = path.realpath(path.join(path.dirname(__file__), '../')) + '/'
 PATHS['DATA_DIR'] = path.realpath(path.join(PATHS['APP_DIR'], '../../data')) + '/'
@@ -26,7 +29,7 @@ else:
 
 PATHS['STATIC_DIR'] = path.realpath(path.join(PATHS['DATA_DIR'], 'static', SETTINGS['BRANCH'])) + '/'
 
-for config in configs:
+for config in CONFIG_NAMES:
     filepath = path.join(PATHS['CONFIG_DIR'], config)
 
     if path.exists(filepath):
@@ -35,7 +38,10 @@ for config in configs:
         for item in parser.items('config'):
             SETTINGS[item[0].upper()] = item[1]
 
-if any(ip in socket.gethostbyname(socket.gethostname()) for ip in local_ips):
+    elif config == 'database' and not path.isfile(filepath):
+        sys.exit('Not found database settings conf/database')
+
+if any(ip in socket.gethostbyname(socket.gethostname()) for ip in LOCAL_IPS):
     SETTINGS['ENV'] = 'local'
 elif path.exists(PATHS['CONFIG_DIR'] + 'production'):
     SETTINGS['ENV'] = 'prod'

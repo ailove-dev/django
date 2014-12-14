@@ -17,9 +17,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = (
-    'ckeditor',
-    'utilities.capable',
-    'utilities.templatetags.common',
+    # main
     'grappelli.dashboard',
     'grappelli',
     'filebrowser',
@@ -28,7 +26,11 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.admin'
+    'django.contrib.admin',
+    # third-party
+    'love_utils',
+    'ckeditor',
+    # project
 )
 
 MIDDLEWARE_CLASSES = (
@@ -159,6 +161,7 @@ LOGGING = {
 # Third-party Application
 
 # CKEditor
+
 CKEDITOR_UPLOAD_PATH = MEDIA_ROOT + 'ckeditor/admin'
 
 CKEDITOR_CONFIGS = {
