@@ -5,7 +5,7 @@ CONFIG = __import__('app.config').config
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
-SECRET_KEY = r'put_your_key_here'
+SECRET_KEY = '{{ secret_key }}'
 
 DEBUG = False
 
@@ -100,9 +100,9 @@ SESSION_FILE_PATH = CONFIG.PATHS['TMP_DIR']
 
 # Email settings
 
-DEFAULT_FROM_EMAIL = 'info@projectname.ru'
+DEFAULT_FROM_EMAIL = 'info@{{ project_name }}.ru'
 
-SERVER_EMAIL = 'projectname.ru <error@ailove.ru>'
+SERVER_EMAIL = '{{ project_name }}.ru <error@ailove.ru>'
 
 MANAGERS = ADMINS = (('error', 'error@ailove.ru'),)
 
@@ -196,7 +196,7 @@ CKEDITOR_CONFIGS = {
 
 # Grappelli
 
-GRAPPELLI_ADMIN_TITLE = 'Project Name'
+GRAPPELLI_ADMIN_TITLE = '{{ project_name }}'
 GRAPPELLI_INDEX_DASHBOARD = 'app.dashboard.CustomIndexDashboard'
 
 # Filebrowser

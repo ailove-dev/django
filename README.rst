@@ -27,71 +27,6 @@ python version from 2.x branch, extract it somewhere, cd into dir and run the fo
     make
     sudo make install
 
-mod_wsgi
-~~~~~~~~
-
-Now you need to install mod_wsgi for apache web server. If you don't use apache you have a lot of other options, but we use
-mod_wsgi and we are happy with it, so if you use another web server you are on your own.
-
-If you are a mac user like me, first run the following command (I assume you have XCode installed)::
-
-    sudo ln -s /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/ /Applications/Xcode.app/Contents/Developer/Toolchains/OSX10.8.xctoolchain
-
-Then download the last version of mod_wsgi, extract it somewhere, cd into dir and run the following commands::
-
-    ./configure --with-python=/usr/local/bin/python
-    make
-    sudo make install
-
-Then add the following line to your httpd.conf and restart your apache::
-
-    LoadModule wsgi_module libexec/apache2/mod_wsgi.so
-
-Also I will show you the example virtual host configuration::
-
-    <VirtualHost *:80>
-
-        ServerName projectname.lo
-        DocumentRoot /repositories/projectname/repo/dev/htdocs
-        CustomLog /repositories/projectname/logs/projectname.lo-acc combined
-        ErrorLog /repositories/projectname/logs/projectname.lo-err
-
-        WSGIDaemonProcess projectname python-path=/repositories/projectname/python/lib/python2.7/site-packages
-        WSGIProcessGroup projectname
-
-        WSGIScriptAlias / /repositories/projectname/repo/dev/wsgi/django.wsgi
-
-        <Directory /repositories/projectname/repo/dev/wsgi>
-            Options Includes FollowSymLinks MultiViews
-            AllowOverride All
-            Order allow,deny
-            Allow from all
-        </Directory>
-
-        Alias /static /repositories/projectname/data/static/dev
-
-        <Directory /repositories/projectname/data/static/dev>
-            Options Includes FollowSymLinks MultiViews
-            AllowOverride All
-            Order allow,deny
-            Allow from all
-        </Directory>
-
-        Alias /data /repositories/projectname/data
-
-        <Directory /repositories/projectname/data>
-            Options Includes FollowSymLinks MultiViews
-            AllowOverride All
-            Order allow,deny
-            Allow from all
-        </Directory>
-
-    </VirtualHost>
-
-Of course you may have different paths than me, so go figure out your paths yourself. Also if you will use this example
-configuration you have to restart apache AFTER you complete all next steps, otherwise apache will complain that you don't
-have everything listed in this config file.
-
 Installation
 ------------
 
@@ -108,6 +43,17 @@ following commands::
     rm -rf .git
     git init
     git commit -m "Initial commit"
+
+Or create a project using this repository as a template::
+
+    mkdir project
+    cd project
+    mkdir -p cache conf data repo/dev tmp logs
+    echo -e "DB_HOST = 127.0.0.1\nDB_NAME = django\nDB_USER = user\nDB_PASSWORD = " > conf/database
+    chmod 777 *
+    cd repo/dev
+    django-admin.py startproject --template=https://github.com/ailove-dev/django/archive/master.zip ailove_project
+
 
 About directories structure
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -196,3 +142,68 @@ Enjoy!
 That's actually all you need to successfully run a django project. Your next step will be to create an app
 in your project and start developing. Django has great documentation so you have to read it thoroughly to do
 everything in a proper way. Happy coding!
+
+mod_wsgi
+~~~~~~~~
+
+Now you need to install mod_wsgi for apache web server. If you don't use apache you have a lot of other options, but we use
+mod_wsgi and we are happy with it, so if you use another web server you are on your own.
+
+If you are a mac user like me, first run the following command (I assume you have XCode installed)::
+
+    sudo ln -s /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/ /Applications/Xcode.app/Contents/Developer/Toolchains/OSX10.8.xctoolchain
+
+Then download the last version of mod_wsgi, extract it somewhere, cd into dir and run the following commands::
+
+    ./configure --with-python=/usr/local/bin/python
+    make
+    sudo make install
+
+Then add the following line to your httpd.conf and restart your apache::
+
+    LoadModule wsgi_module libexec/apache2/mod_wsgi.so
+
+Also I will show you the example virtual host configuration::
+
+    <VirtualHost *:80>
+
+        ServerName projectname.lo
+        DocumentRoot /repositories/projectname/repo/dev/htdocs
+        CustomLog /repositories/projectname/logs/projectname.lo-acc combined
+        ErrorLog /repositories/projectname/logs/projectname.lo-err
+
+        WSGIDaemonProcess projectname python-path=/repositories/projectname/python/lib/python2.7/site-packages
+        WSGIProcessGroup projectname
+
+        WSGIScriptAlias / /repositories/projectname/repo/dev/wsgi/django.wsgi
+
+        <Directory /repositories/projectname/repo/dev/wsgi>
+            Options Includes FollowSymLinks MultiViews
+            AllowOverride All
+            Order allow,deny
+            Allow from all
+        </Directory>
+
+        Alias /static /repositories/projectname/data/static/dev
+
+        <Directory /repositories/projectname/data/static/dev>
+            Options Includes FollowSymLinks MultiViews
+            AllowOverride All
+            Order allow,deny
+            Allow from all
+        </Directory>
+
+        Alias /data /repositories/projectname/data
+
+        <Directory /repositories/projectname/data>
+            Options Includes FollowSymLinks MultiViews
+            AllowOverride All
+            Order allow,deny
+            Allow from all
+        </Directory>
+
+    </VirtualHost>
+
+Of course you may have different paths than me, so go figure out your paths yourself. Also if you will use this example
+configuration you have to restart apache AFTER you complete all previous steps, otherwise apache will complain that you don't
+have everything listed in this config file.
