@@ -1,1 +1,1 @@
-# module for common scripts
+default_app_config = 'common.apps.CommonConfig'

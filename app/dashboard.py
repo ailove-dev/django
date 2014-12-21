@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
+
 from django.utils.translation import ugettext_lazy as _
 from grappelli.dashboard import modules, Dashboard
 
@@ -19,7 +21,7 @@ class CustomIndexDashboard(Dashboard):
         ))
 
         self.children.append(modules.LinkList(
-            'Media',
+            title='Media',
             column=2,
             children=[
                 {
@@ -31,7 +33,7 @@ class CustomIndexDashboard(Dashboard):
         ))
 
         self.children.append(modules.RecentActions(
-            _('Recent Actions'),
+            title=_('Recent Actions'),
             limit=5,
             collapsible=True,
             column=3,

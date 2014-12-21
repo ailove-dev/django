@@ -28,6 +28,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     # third-party
+    'common',
     'love_utils',
     'ckeditor',
     # project
@@ -54,11 +55,11 @@ WSGI_APPLICATION = 'app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'
-        'NAME': CONFIG.SETTINGS['DB_NAME'],                  # Or path to database file if using sqlite3
-        'USER': CONFIG.SETTINGS['DB_USER'],                  # Not used with sqlite3
-        'PASSWORD': CONFIG.SETTINGS['DB_PASSWORD'],          # Not used with sqlite3
-        'HOST': CONFIG.SETTINGS['DB_HOST'],                  # Set to empty string for localhost. Not used with sqlite3
-        'PORT': '',                                          # Set to empty string for default. Not used with sqlite3
+        'NAME': CONFIG.SETTINGS['DB_NAME'],
+        'USER': CONFIG.SETTINGS['DB_USER'],
+        'PASSWORD': CONFIG.SETTINGS['DB_PASSWORD'],
+        'HOST': CONFIG.SETTINGS['DB_HOST'],
+        'PORT': '',
     }
 }
 
@@ -168,18 +169,23 @@ CKEDITOR_CONFIGS = {
     'default': {
         'toolbar':
         [
-            {'name': 'document',    'items': ['Source']},
-            {'name': 'clipboard',   'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
-            {'name': 'editing',     'items': ['Find', 'Replace', '-', 'SelectAll', '-', 'SpellChecker', 'Scayt']},
-            {'name': 'basicstyles', 'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
+            {'name': 'document', 'items': ['Source']},
+            {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
+            {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll', '-', 'SpellChecker', 'Scayt']},
+            {'name': 'basicstyles', 'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-',
+                                              'RemoveFormat']},
             '/',
-            {'name': 'paragraph',   'items': ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl']},
-            {'name': 'links',       'items': ['Link', 'Unlink', 'Anchor']},
-            {'name': 'insert',      'items': ['Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar']},
+            {'name': 'paragraph', 'items': ['NumberedList', 'BulletedList', '-',
+                                            'Outdent', 'Indent', '-',
+                                            'Blockquote', 'CreateDiv', '-',
+                                            'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                                            'BidiLtr', 'BidiRtl']},
+            {'name': 'links', 'items': ['Link', 'Unlink', 'Anchor']},
+            {'name': 'insert', 'items': ['Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar']},
             '/',
-            {'name': 'styles',      'items': ['Styles', 'Format', 'Font', 'FontSize']},
-            {'name': 'colors',      'items': ['TextColor', 'BGColor']},
-            {'name': 'tools',       'items': ['Maximize', 'ShowBlocks']}
+            {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
+            {'name': 'colors', 'items': ['TextColor', 'BGColor']},
+            {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']}
         ],
         'filebrowserImageBrowseUrl': '/admin/filebrowser/browse?pop=3',
         'removeDialogTabs': 'link:upload;image:Upload;flash:Upload',
