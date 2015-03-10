@@ -164,7 +164,6 @@ LOGGING = {
 # CKEditor
 
 CKEDITOR_UPLOAD_PATH = MEDIA_ROOT + 'ckeditor/admin'
-
 CKEDITOR_CONFIGS = {
     'default': {
         'toolbar':
