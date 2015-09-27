@@ -101,7 +101,7 @@ atexit.register(_exiting)
 
 
 def track(path):
-    if not path in _files:
+    if path not in _files:
         _files.append(path)
 
 

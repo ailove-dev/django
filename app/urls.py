@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 
 from django.conf import settings
-from django.conf.urls import patterns, include, url, static
+from django.conf.urls import include, url, static
 from django.contrib import admin
 from filebrowser.sites import site
 
 
-urlpatterns = patterns('',
+urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^grappelli/', include('grappelli.urls')),
     url(r'^admin/filebrowser/', include(site.urls)),
-    url(r'^ckeditor/', include('ckeditor.urls')),
-)
+    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
+]
 
 if settings.DEBUG and settings.CONFIG.SETTINGS['ENV'] == 'local':
     urlpatterns += static.static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

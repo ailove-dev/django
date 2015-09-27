@@ -5,4 +5,4 @@ django-filebrowser
 django-grappelli
 psycopg2
 wsgiref
--e git+https://github.com/ailove-dev/django-love-utils#egg=django-love-utils
+django-love-utils==0.1.1

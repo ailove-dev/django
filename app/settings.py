@@ -18,16 +18,16 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = (
     # main
-    'grappelli.dashboard',
     'grappelli',
-    'filebrowser',
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.admin',
     # third-party
+    'filebrowser',
+    'grappelli.dashboard',
     'common',
     'love_utils',
     'ckeditor',
@@ -50,11 +50,12 @@ WSGI_APPLICATION = 'app.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/1.7/ref/settings/#databases
+# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
+# Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': CONFIG.SETTINGS['DB_NAME'],
         'USER': CONFIG.SETTINGS['DB_USER'],
         'PASSWORD': CONFIG.SETTINGS['DB_PASSWORD'],
@@ -65,7 +66,7 @@ DATABASES = {
 
 
 # Internationalization
-# https://docs.djangoproject.com/en/1.7/topics/i18n/
+# https://docs.djangoproject.com/en/1.8/topics/i18n/
 
 LANGUAGE_CODE = 'ru-RU'
 
@@ -79,7 +80,7 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.7/howto/static-files/
+# https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATICFILES_DIRS = (
     CONFIG.PATHS['APP_DIR'] + 'app/static/',
@@ -94,8 +95,6 @@ MEDIA_ROOT = CONFIG.PATHS['DATA_DIR']
 MEDIA_URL = '/data/'
 
 FILE_UPLOAD_TEMP_DIR = CONFIG.PATHS['TMP_DIR']
-
-SESSION_FILE_PATH = CONFIG.PATHS['TMP_DIR']
 
 
 # Email settings
@@ -115,20 +114,27 @@ LOCALE_PATHS = (
     CONFIG.PATHS['APP_DIR'] + 'app/locale/',
 )
 
-TEMPLATE_DIRS = (
-    CONFIG.PATHS['APP_DIR'] + 'app/templates/',
-)
-
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.contrib.auth.context_processors.auth',
-    'django.core.context_processors.request',
-    'django.core.context_processors.debug',
-    'django.core.context_processors.i18n',
-    'django.core.context_processors.media',
-    'django.core.context_processors.static',
-    'django.core.context_processors.tz',
-    'django.contrib.messages.context_processors.messages'
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            CONFIG.PATHS['APP_DIR'] + 'app/templates/',
+        ],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.csrf',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
 
 
 # Testing and logging
@@ -140,10 +146,18 @@ LOGGING = {
     'disable_existing_loggers': False,
     'filters': {
         'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse'
-        }
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
     },
     'handlers': {
+        'console': {
+            'level': 'INFO',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+        },
         'mail_admins': {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
@@ -151,10 +165,12 @@ LOGGING = {
         }
     },
     'loggers': {
-        'django.request': {
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
-            'propagate': True,
+        'django': {
+            'handlers': ['console', 'mail_admins'],
+            'level': 'INFO',
+        },
+        'py.warnings': {
+            'handlers': ['console'],
         },
     }
 }
@@ -169,18 +185,30 @@ CKEDITOR_CONFIGS = {
         'toolbar':
         [
             {'name': 'document', 'items': ['Source']},
-            {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
-            {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll', '-', 'SpellChecker', 'Scayt']},
-            {'name': 'basicstyles', 'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-',
-                                              'RemoveFormat']},
+            {'name': 'clipboard', 'items': [
+                'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-',
+                'Undo', 'Redo'
+            ]},
+            {'name': 'editing', 'items': [
+                'Find', 'Replace', '-', 'SelectAll', '-',
+                'SpellChecker', 'Scayt'
+            ]},
+            {'name': 'basicstyles', 'items': [
+                'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-',
+                'RemoveFormat'
+            ]},
             '/',
-            {'name': 'paragraph', 'items': ['NumberedList', 'BulletedList', '-',
-                                            'Outdent', 'Indent', '-',
-                                            'Blockquote', 'CreateDiv', '-',
-                                            'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
-                                            'BidiLtr', 'BidiRtl']},
+            {'name': 'paragraph', 'items': [
+                'NumberedList', 'BulletedList', '-',
+                'Outdent', 'Indent', '-',
+                'Blockquote', 'CreateDiv', '-',
+                'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                'BidiLtr', 'BidiRtl'
+            ]},
             {'name': 'links', 'items': ['Link', 'Unlink', 'Anchor']},
-            {'name': 'insert', 'items': ['Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar']},
+            {'name': 'insert', 'items': [
+                'Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar'
+            ]},
             '/',
             {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
             {'name': 'colors', 'items': ['TextColor', 'BGColor']},
@@ -208,3 +236,8 @@ if CONFIG.SETTINGS['ENV'] == 'test':
     from settings_test import *
 if CONFIG.SETTINGS['ENV'] == 'dev' or CONFIG.SETTINGS['ENV'] == 'local':
     from settings_dev import *
+
+try:
+    from settings_local import *
+except ImportError:
+    pass

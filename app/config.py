@@ -16,7 +16,7 @@ parser = SafeConfigParser()
 
 PATHS['APP_DIR'] = path.realpath(path.join(path.dirname(__file__), '../')) + '/'
 PATHS['DATA_DIR'] = path.realpath(path.join(PATHS['APP_DIR'], '../../data')) + '/'
-PATHS['CONFIG_DIR'] = path.realpath(path.join(PATHS['APP_DIR'], '../../conf')) + '/'
+PATHS['CONFIG_DIR'] = path.realpath(path.join(PATHS['APP_DIR'], '../conf')) + '/'
 PATHS['TMP_DIR'] = path.realpath(path.join(PATHS['APP_DIR'], '../../tmp')) + '/'
 PATHS['CACHE_DIR'] = path.realpath(path.join(PATHS['APP_DIR'], '../../cache')) + '/'
 
