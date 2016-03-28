@@ -17,6 +17,7 @@ pids
 *.pid
 *.seed
 
+
 pkg
 node_modules
 lib-cov
@@ -55,6 +56,9 @@ target/
 *.egg
 *.manifest
 *.spec
+*.rdb
+*.db
+app/settings/local.py
 
 # Pip
 pip-log.txt

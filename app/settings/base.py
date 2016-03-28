@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-CONFIG = __import__('app.config').config
+import os
+import dj_database_url
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
+CONFIG = __import__('app.config').config
 
 SECRET_KEY = '{{ secret_key }}'
 
@@ -18,16 +18,16 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = (
     # main
-    'grappelli.dashboard',
-    'grappelli',
-    'filebrowser',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 'grappelli.dashboard',
+    # 'grappelli',
     'django.contrib.admin',
     # third-party
+    'filebrowser',
     'common',
     'love_utils',
     'ckeditor',
@@ -50,7 +50,6 @@ WSGI_APPLICATION = 'app.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
 DATABASES = {
     'default': {
@@ -63,13 +62,16 @@ DATABASES = {
     }
 }
 
+database_url = os.environ.get(dj_database_url.DEFAULT_ENV, None)
+if database_url is not None:
+    DATABASES['default'] = dj_database_url.config(conn_max_age=600)
+
 
 # Internationalization
-# https://docs.djangoproject.com/en/1.7/topics/i18n/
 
-LANGUAGE_CODE = 'ru-RU'
+LANGUAGE_CODE = 'en'
 
-TIME_ZONE = 'Europe/Moscow'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
@@ -79,11 +81,6 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.7/howto/static-files/
-
-STATICFILES_DIRS = (
-    CONFIG.PATHS['APP_DIR'] + 'app/static/',
-)
 
 STATIC_ROOT = CONFIG.PATHS['STATIC_DIR']
 
@@ -93,9 +90,10 @@ MEDIA_ROOT = CONFIG.PATHS['DATA_DIR']
 
 MEDIA_URL = '/data/'
 
-FILE_UPLOAD_TEMP_DIR = CONFIG.PATHS['TMP_DIR']
-
-SESSION_FILE_PATH = CONFIG.PATHS['TMP_DIR']
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
 
 
 # Email settings
@@ -115,20 +113,26 @@ LOCALE_PATHS = (
     CONFIG.PATHS['APP_DIR'] + 'app/locale/',
 )
 
-TEMPLATE_DIRS = (
-    CONFIG.PATHS['APP_DIR'] + 'app/templates/',
-)
+AUTH_PASSWORD_VALIDATORS = ()
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.contrib.auth.context_processors.auth',
-    'django.core.context_processors.request',
-    'django.core.context_processors.debug',
-    'django.core.context_processors.i18n',
-    'django.core.context_processors.media',
-    'django.core.context_processors.static',
-    'django.core.context_processors.tz',
-    'django.contrib.messages.context_processors.messages'
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.csrf',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
 
 
 # Testing and logging
@@ -169,18 +173,30 @@ CKEDITOR_CONFIGS = {
         'toolbar':
         [
             {'name': 'document', 'items': ['Source']},
-            {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
-            {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll', '-', 'SpellChecker', 'Scayt']},
-            {'name': 'basicstyles', 'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-',
-                                              'RemoveFormat']},
+            {'name': 'clipboard', 'items': [
+                'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-',
+                'Undo', 'Redo'
+            ]},
+            {'name': 'editing', 'items': [
+                'Find', 'Replace', '-', 'SelectAll', '-',
+                'SpellChecker', 'Scayt'
+            ]},
+            {'name': 'basicstyles', 'items': [
+                'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-',
+                'RemoveFormat'
+            ]},
             '/',
-            {'name': 'paragraph', 'items': ['NumberedList', 'BulletedList', '-',
-                                            'Outdent', 'Indent', '-',
-                                            'Blockquote', 'CreateDiv', '-',
-                                            'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
-                                            'BidiLtr', 'BidiRtl']},
+            {'name': 'paragraph', 'items': [
+                'NumberedList', 'BulletedList', '-',
+                'Outdent', 'Indent', '-',
+                'Blockquote', 'CreateDiv', '-',
+                'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                'BidiLtr', 'BidiRtl'
+            ]},
             {'name': 'links', 'items': ['Link', 'Unlink', 'Anchor']},
-            {'name': 'insert', 'items': ['Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar']},
+            {'name': 'insert', 'items': [
+                'Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar'
+            ]},
             '/',
             {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
             {'name': 'colors', 'items': ['TextColor', 'BGColor']},
@@ -202,9 +218,3 @@ GRAPPELLI_INDEX_DASHBOARD = 'app.dashboard.CustomIndexDashboard'
 
 FILEBROWSER_DIRECTORY = ''
 FILEBROWSER_ADMIN_THUMBNAIL = 'medium'
-
-
-if CONFIG.SETTINGS['ENV'] == 'test':
-    from settings_test import *
-if CONFIG.SETTINGS['ENV'] == 'dev' or CONFIG.SETTINGS['ENV'] == 'local':
-    from settings_dev import *

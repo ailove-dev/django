@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from settings import *
+from .base import *
 
 MANAGERS = ADMINS = ()
 

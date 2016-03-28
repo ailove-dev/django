@@ -3,11 +3,21 @@
 import sys
 import re
 import socket
-from os import path
-from cStringIO import StringIO
-from ConfigParser import SafeConfigParser
+import dj_database_url
+from os import path, environ
 
-CONFIG_NAMES = ('database', 'memcache', 'social', 'revision')
+try:
+    from io import StringIO
+    from configparser import SafeConfigParser
+except ImportError:
+    from cStringIO import StringIO
+    from ConfigParser import SafeConfigParser
+
+ENV_APP_MODE = 'APP_MODE'
+ENV_REDIS_URL = 'REDIS_URL'
+ENV_ELASTIC_URL = 'ELASTIC_URL'
+
+CONFIG_NAMES = ('database',)
 LOCAL_IPS = ('192.168.', '127.0.0.1')
 PATHS = SETTINGS = {}
 
@@ -39,11 +49,12 @@ for config in CONFIG_NAMES:
             SETTINGS[item[0].upper()] = item[1]
 
     elif config == 'database' and not path.isfile(filepath):
-        sys.exit('Not found database settings conf/database')
+        if environ.get(dj_database_url.DEFAULT_ENV, None) is None:
+            sys.exit('Add file conf/database or set environment variable {}'.format(dj_database_url.DEFAULT_ENV))
 
 if any(ip in socket.gethostbyname(socket.gethostname()) for ip in LOCAL_IPS):
     SETTINGS['ENV'] = 'local'
-elif path.exists(PATHS['CONFIG_DIR'] + 'production'):
+elif path.exists(PATHS['CONFIG_DIR'] + 'production') or environ.get(ENV_APP_MODE, None) == 'production':
     SETTINGS['ENV'] = 'prod'
 elif '/test/' in PATHS['APP_DIR']:
     SETTINGS['ENV'] = 'test'

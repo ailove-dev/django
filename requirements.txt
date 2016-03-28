@@ -1,8 +1,9 @@
-Django==1.7.9
-Pillow
-django-ckeditor==4.4.7
+dj-database-url
+Django
+django-ckeditor
 django-filebrowser
 django-grappelli
-psycopg2
-wsgiref
 django-love-utils==0.1.1
+gunicorn
+Pillow
+psycopg2
