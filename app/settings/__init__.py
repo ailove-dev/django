@@ -1,15 +1,11 @@
-# -*- coding: utf-8 -*-
+CONFIG = __import__("app.config").config
 
-CONFIG = __import__('app.config').config
-
-if CONFIG.SETTINGS['ENV'] == 'test':
-    from .test import *
-elif CONFIG.SETTINGS['ENV'] == 'dev':
-    from .development import *
-elif CONFIG.SETTINGS['ENV'] == 'local':
+if CONFIG.SETTINGS["ENV"] == "dev":
+    from .development import *  # noqa
+elif CONFIG.SETTINGS["ENV"] == "local":
     try:
-        from .local import *
+        from .local import *  # noqa
     except ImportError:
-        from .development import *
+        from .development import *  # noqa
 else:
-    from .production import *
+    from .production import *  # noqa

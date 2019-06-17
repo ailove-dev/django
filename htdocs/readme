@@ -1,1 +1,0 @@
-DELETE ME. Directory for static files (js, css, img etc.) which are exposed to the world. You don't need to add static files by hand here, they come here when you run 'python manage.py collectstatic'

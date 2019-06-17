@@ -36,6 +36,7 @@ Gemfile.lock
 # Python
 __pycache__/
 *.py[cod]
+*$py.class
 *.so
 .Python
 python/
@@ -60,6 +61,8 @@ target/
 *.db
 app/settings/local.py
 
+.mypy_cache/
+
 # Pip
 pip-log.txt
 pip-delete-this-directory.txt
@@ -71,3 +74,4 @@ htmlcov/
 .cache
 nosetests.xml
 coverage.xml
+.env
