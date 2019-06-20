@@ -1,9 +1,12 @@
 from django.conf import settings
 from django.conf.urls import static
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
 
-urlpatterns = [path(settings.ADMIN_URL, admin.site.urls)]
+urlpatterns = [
+    path(settings.ADMIN_URL, admin.site.urls),
+    path("api/", include("bc.urls")),
+]
 
 if settings.DEBUG:
     urlpatterns += static.static(

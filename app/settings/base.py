@@ -21,6 +21,7 @@ INSTALLED_APPS = (
     "django.contrib.staticfiles",
     "django.contrib.sites",
     "django.contrib.admin",
+    "bc.users",
 )
 
 MIDDLEWARE = [
@@ -156,3 +157,16 @@ LOGGING = {
         }
     },
 }
+
+
+AUTH_USER_MODEL = "users.User"
+
+REST_FRAMEWORK = {
+    "EXCEPTION_HANDLER": "bc.views.exception_handler",
+    "DATE_INPUT_FORMATS": ("%d.%m.%Y", "iso-8601"),
+}
+
+AUTHENTICATION_BACKENDS = (
+    "bc.auth.backends.BusinessClassBackend",
+    "django.contrib.auth.backends.ModelBackend",
+)

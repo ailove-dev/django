@@ -1,8 +1,8 @@
 CONFIG = __import__("app.config").config
 
-if CONFIG.SETTINGS["ENV"] == "dev":
+if CONFIG.env("ENV") == "dev":
     from .development import *  # noqa
-elif CONFIG.SETTINGS["ENV"] == "local":
+elif CONFIG.env("ENV") == "local":
     try:
         from .local import *  # noqa
     except ImportError:
