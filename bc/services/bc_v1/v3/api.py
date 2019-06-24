@@ -60,20 +60,21 @@ class BusinessClassAPI:
 
     @classmethod
     def restore_password(cls, email: str):
-        response = cls._send("post", "restore/password", data={"email": email})
-        return response.json()
+        return cls._send("post", "restore/password", data={"email": email}).json()
 
     @classmethod
     def areas(cls):
-        return cls._send("get", "core/areas")
+        return cls._send("get", "core/areas").json()
 
     @classmethod
     def profile_short(cls, user_token: str) -> UserData:
-        return cls._send(
-            "get",
-            "accounts/profile/short",
-            headers={"Authorization": f"JWT {user_token}"},
-        ).json()
+        return UserData(
+            cls._send(
+                "get",
+                "accounts/profile/short",
+                headers={"Authorization": f"JWT {user_token}"},
+            ).json()
+        )
 
     @classmethod
     def user_course(cls, user_token: str) -> CourseData:
