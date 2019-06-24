@@ -60,7 +60,7 @@ class BusinessClassAPI:
 
     @classmethod
     def restore_password(cls, email: str):
-        return cls._send("post", "restore/password", data={"email": email}).json()
+        return cls._send("post", "auth/restore/password/", data={"email": email})
 
     @classmethod
     def areas(cls):

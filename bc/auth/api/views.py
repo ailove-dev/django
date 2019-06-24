@@ -35,3 +35,14 @@ class LogoutAPIView(views.APIView):
         response.delete_cookie(USER_AUTH_TOKEN_COOKIE_NAME)
         logout(request)
         return response
+
+
+class RestorePasswordAPIView(generics.GenericAPIView):
+    serializer_class = serializers.RestorePasswordSerializer
+    permission_classes = (~IsAuthenticated,)
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        BusinessClassAPI.restore_password(email=serializer.validated_data["email"])
+        return Response()
