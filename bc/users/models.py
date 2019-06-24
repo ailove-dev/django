@@ -10,3 +10,8 @@ class User(AbstractUser):
     course_path = models.SmallIntegerField(
         verbose_name=_("course path"), help_text=_("user course path"), null=True
     )
+
+    def attach_course_path(self, course_path, commit=True):
+        self.course_path = course_path
+        if commit:
+            self.save()

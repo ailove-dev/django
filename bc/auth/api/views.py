@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from rest_framework import generics, status, views
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from bc.auth import USER_AUTH_TOKEN_COOKIE_NAME
@@ -9,6 +10,7 @@ from . import exceptions, serializers
 
 class LoginAPIView(generics.GenericAPIView):
     serializer_class = serializers.LoginSerializer
+    permission_classes = (~IsAuthenticated,)
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)

@@ -6,5 +6,5 @@ if typing.TYPE_CHECKING:
 USER_AUTH_TOKEN_COOKIE_NAME = "gbc_user_token"
 
 
-def get_auth_token(request: "Request") -> str:
-    return request.COOKIES[USER_AUTH_TOKEN_COOKIE_NAME]
+def get_auth_token(request: "Request") -> typing.Optional[str]:
+    return request.COOKIES.get(USER_AUTH_TOKEN_COOKIE_NAME)

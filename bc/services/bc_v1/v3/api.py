@@ -2,7 +2,7 @@ import logging
 
 import requests
 
-from .utils import CourseResponse
+from .utils import CourseData, UserData
 
 logger = logging.getLogger(__name__)
 
@@ -29,13 +29,15 @@ class BusinessClassAPI:
     @classmethod
     def _send(cls, method, url, data=None, headers=None, timeout=REQUEST_TIMEOUT):
         try:
-            return requests.api.request(
+            response = requests.api.request(
                 method,
                 f"{cls.BASE_URL}{url}",
                 json=data,
                 headers=headers,
                 timeout=timeout,
             )
+            logger.debug(response.text)
+            return response
         except requests.Timeout:
             raise RequestTimeout
         except requests.RequestException:
@@ -66,23 +68,23 @@ class BusinessClassAPI:
         return cls._send("get", "core/areas")
 
     @classmethod
-    def profile_short(cls, user_token):
+    def profile_short(cls, user_token: str) -> UserData:
         return cls._send(
             "get",
             "accounts/profile/short",
             headers={"Authorization": f"JWT {user_token}"},
-        )
+        ).json()
 
     @classmethod
-    def user_course(cls, user_token: str) -> CourseResponse:
-        return CourseResponse(
+    def user_course(cls, user_token: str) -> CourseData:
+        return CourseData(
             cls._send(
                 "get", "modules", headers={"Authorization": f"JWT {user_token}"}
             ).json()
         )
 
     @classmethod
-    def course_module(cls, module_id: int, user_token: str) -> CourseResponse:
+    def course_module(cls, module_id: int, user_token: str):
         return cls._send(
             "get",
             f"modules/{module_id}",

@@ -1,3 +1,5 @@
+import logging
+
 from rest_framework import generics
 from rest_framework.response import Response
 
@@ -6,30 +8,39 @@ from bc.services.bc_v1.v3.api import BusinessClassAPI
 from .. import models
 from . import serializers
 
+logger = logging.getLogger(__name__)
+
 
 class CourseListAPIView(generics.ListAPIView):
     queryset = models.Course.objects.filter(is_enabled=True)
     serializer_class = serializers.CourseSerializer
     paginator_class = None
 
+    def get_user_course(self):
+        user = self.request.user
+        if not user.is_authenticated:
+            return
+
+        auth_token = get_auth_token(self.request)
+
+        if not user.course_path:
+            user_data = BusinessClassAPI.profile_short(auth_token)
+            user = user_data.update_user(user)
+
+        course = BusinessClassAPI.user_course(auth_token)
+        course.attach_external_id(user.course_path)
+        return course
+
     def get_queryset(self):
-        return [
-            {**obj.internal_data, **obj.external_data} for obj in super().get_queryset()
-        ]
+        user_course = self.get_user_course()
+        qs = super().get_queryset()
 
-    def get(self, request, *args, **kwargs):
-        if request.user.is_authenticated and request.user.course_path:
-            auth_token = get_auth_token(request)
-            try:
-                course = models.Course.objects.get(external_id=request.user.course_path)
-            except models.Course.DoesNotExists:
-                pass
-            else:
-                course_data = BusinessClassAPI.user_course(auth_token).serialize()
-                course.external_data = course_data
+        for course in qs:
+            if user_course and course.external_id == user_course.external_id:
+                course.external_data = user_course.common_data
                 course.save()
-
-        return super().get(request, *args, **kwargs)
+                course.external_data.update(user_course.data)
+            yield course
 
 
 class CourseModuleRetieveAPIView(generics.RetrieveAPIView):

@@ -1,13 +1,17 @@
+import typing
 from collections import UserDict
 
 
-class CourseResponse(UserDict):
+class CourseData(UserDict):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        print(args, kwargs)
+        self.external_id = None
+
+    def attach_external_id(self, external_id):
+        self.external_id = external_id
 
     @property
-    def modules(self):
+    def modules(self) -> typing.Generator:
         for module in self.data.get("unavailableModules", []):
             yield module
 
@@ -18,10 +22,13 @@ class CourseResponse(UserDict):
             yield {**module, "is_extra": True}
 
     @property
-    def modules_list(self):
+    def modules_list(self) -> list:
         return list(self.modules)
 
-    def serialize(self):
+    @property
+    def common_data(self):
+        """Not user-specific, safe to store
+        """
         course_duration = 0
         modules = []
         for module in self.modules:
@@ -36,3 +43,16 @@ class CourseResponse(UserDict):
             )
             course_duration += duration
         return {"modules": modules, "duration": course_duration}
+
+
+class UserData(UserDict):
+    UPDATE_FIELDS = (("course_path", "path"), ("avatar", "photo"))
+
+    def update_user(self, user, commit: bool = True):
+        for user_field, response_field in self.UPDATE_FIELDS:
+            setattr(user, user_field, self.data.get(response_field))
+
+        if commit:
+            user.save()
+
+        return user
