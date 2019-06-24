@@ -104,6 +104,14 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
+                    "course_path",
+                    models.SmallIntegerField(
+                        help_text="user course path",
+                        null=True,
+                        verbose_name="course path",
+                    ),
+                ),
+                (
                     "groups",
                     models.ManyToManyField(
                         blank=True,

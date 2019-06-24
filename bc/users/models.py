@@ -7,3 +7,6 @@ class User(AbstractUser):
     avatar = models.URLField(
         verbose_name=_("avatar"), help_text=_("last fetched avatar image"), blank=True
     )
+    course_path = models.SmallIntegerField(
+        verbose_name=_("course path"), help_text=_("user course path"), null=True
+    )

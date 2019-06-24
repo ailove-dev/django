@@ -2,10 +2,9 @@ from django.contrib.auth import authenticate, login, logout
 from rest_framework import generics, status, views
 from rest_framework.response import Response
 
+from bc.auth import USER_AUTH_TOKEN_COOKIE_NAME
 from bc.services.bc_v1.v3.api import BusinessClassAPI
 from . import exceptions, serializers
-
-USER_AUTH_TOKEN_COOKIE_NAME = "gbc_user_token"
 
 
 class LoginAPIView(generics.GenericAPIView):

@@ -22,6 +22,7 @@ INSTALLED_APPS = (
     "django.contrib.sites",
     "django.contrib.admin",
     "bc.users",
+    "bc.courses",
 )
 
 MIDDLEWARE = [
@@ -164,6 +165,10 @@ AUTH_USER_MODEL = "users.User"
 REST_FRAMEWORK = {
     "EXCEPTION_HANDLER": "bc.views.exception_handler",
     "DATE_INPUT_FORMATS": ("%d.%m.%Y", "iso-8601"),
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "app.authentication.CsrfExemptSessionAuthentication",
+        "rest_framework.authentication.BasicAuthentication",
+    ),
 }
 
 AUTHENTICATION_BACKENDS = (
