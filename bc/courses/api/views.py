@@ -1,6 +1,7 @@
 import logging
 
-from rest_framework import generics
+from rest_framework import generics, viewsets
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from bc.auth import get_auth_token
@@ -11,10 +12,17 @@ from . import serializers
 logger = logging.getLogger(__name__)
 
 
-class CourseListAPIView(generics.ListAPIView):
+class CourseViewSet(viewsets.ModelViewSet):
     queryset = models.Course.objects.filter(is_enabled=True)
     serializer_class = serializers.CourseSerializer
     paginator_class = None
+
+    def get_permissions(self):
+        if self.action == "retrieve":
+            permission_classes = [IsAuthenticated]
+        else:
+            permission_classes = self.permission_classes
+        return [permission() for permission in permission_classes]
 
     def get_user_course(self):
         user = self.request.user
@@ -41,6 +49,12 @@ class CourseListAPIView(generics.ListAPIView):
                 course.save()
                 course.external_data.update(user_course.data)
             yield course
+
+    def get_object(self):
+        user_course = self.get_user_course()
+        course = super().get_queryset().get(external_id=user_course.external_id)
+        course.external_data.update(user_course.data)
+        return course
 
 
 class CourseModuleRetieveAPIView(generics.RetrieveAPIView):

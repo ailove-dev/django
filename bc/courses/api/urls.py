@@ -5,7 +5,8 @@ from . import views
 app_name = "courses"
 
 urlpatterns = [
-    path("", views.CourseListAPIView.as_view(), name="list"),
+    path("", views.CourseViewSet.as_view({"get": "list"}), name="list"),
+    path("current/", views.CourseViewSet.as_view({"get": "retrieve"}), name="current"),
     path(
         "current/<int:module_id>",
         views.CourseModuleRetieveAPIView.as_view(),
