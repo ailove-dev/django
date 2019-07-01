@@ -10,6 +10,12 @@ class Course(models.Model):
     internal_data = JSONField(verbose_name=_("internal data"), default=dict, blank=True)
     external_data = JSONField(verbose_name=_("external data"), default=dict, blank=True)
     is_enabled = models.BooleanField(verbose_name=_("is enabled"), default=False)
+    position = models.SmallIntegerField(verbose_name=_("position"), default=0)
+
+    class Meta:
+        verbose_name = _("Course")
+        verbose_name_plural = _("Courses")
+        ordering = ("position",)
 
     def __str__(self):
         return self.external_id
